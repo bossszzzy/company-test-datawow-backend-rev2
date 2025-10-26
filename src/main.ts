@@ -6,7 +6,11 @@ import { GlobalValidationPipe } from './common/pipes/global-validation.pipe';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
+  app.enableCors({
+    origin: [process.env.FRONTEND_URL],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'x-role', 'x-user-id'],
+  })
   app.useGlobalPipes(new GlobalValidationPipe())
   app.useGlobalFilters(new BaseHttpFilter())
   await app.listen(process.env.PORT ?? 3000);
