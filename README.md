@@ -20,3 +20,5 @@ API Path for test:
 |  User  | **POST**   | `/reservations`       | Reserved Concert            |
 |  User  | **GET**    | `/reservations/me`    | Check reservation user      |
 |  User  | **DELETE** | `/reservations/:id`   | Cancel reservation          |
+|   -    | **GET**    | `/auth/me`            | Get me                      |
+|   -    | **GET**    | `/switch/:target`     | switch user/admin           |

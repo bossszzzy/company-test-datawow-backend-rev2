@@ -9,7 +9,8 @@ async function bootstrap() {
   app.enableCors({
     origin: [process.env.FRONTEND_URL],
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'x-role', 'x-user-id'],
+    allowedHeaders: ['Content-Type', 'x-user-id', 'x-role'],
+    credential: false
   })
   app.useGlobalPipes(new GlobalValidationPipe())
   app.useGlobalFilters(new BaseHttpFilter())

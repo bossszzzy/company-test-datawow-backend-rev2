@@ -1,15 +1,27 @@
 import { CanActivate, ExecutionContext, ForbiddenException, Injectable } from '@nestjs/common';
-import { Role } from 'generated/prisma/enums';
-import { Observable } from 'rxjs';
+import { PrismaService } from 'src/database/prisma.service';
+import { UserIdRequiredException } from './exceptions/user-id-required.exception';
+import { UserNotFoundException } from './exceptions/user-not-found.exception';
+import { AdminOnlyException } from './exceptions/admin-only.exception';
 
 @Injectable()
 export class RoleGuard implements CanActivate {
-  canActivate(
+  constructor(private prisma: PrismaService) { }
+  async canActivate(
     context: ExecutionContext,
-  ): boolean | Promise<boolean> | Observable<boolean> {
-    const req = context.switchToHttp().getRequest()
-    const role = req.headers['x-role']
-    if (role !== 'ADMIN' && role !== 'admin') throw new ForbiddenException('Admin Only')
+  ): Promise<boolean> {
+    const req = context.switchToHttp().getRequest<Request>()
+    const userId = (req.headers as any)['x-user-id'] as string | undefined;
+
+    if (!userId) throw new UserIdRequiredException;
+
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: { role: true },
+    });
+    if (!user) throw new UserNotFoundException
+    if (user.role !== 'ADMIN') throw new AdminOnlyException;
+
     return true;
   }
 
@@ -17,6 +29,6 @@ export class RoleGuard implements CanActivate {
 
 export function getUserId(req: any): string {
   const id = req.headers['x-user-id'];
-  if (!id || typeof id !== 'string') throw new ForbiddenException('x-user-id required');
+  if (!id || typeof id !== 'string') throw new UserIdRequiredException;
   return id
 }

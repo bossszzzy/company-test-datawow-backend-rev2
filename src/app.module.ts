@@ -9,10 +9,11 @@ import { ConcertsModule } from './concerts/concerts.module';
 import { ReservationsService } from './reservations/reservations.service';
 import { ReservationsController } from './reservations/reservations.controller';
 import { ReservationsModule } from './reservations/reservations.module';
+import { AuthController } from './auth/auth.controller';
 
 @Module({
   imports: [ConfigModule, DatabaseModule, ConcertsModule, ReservationsModule],
-  controllers: [AppController, ConcertsController, ReservationsController],
+  controllers: [AppController, ConcertsController, ReservationsController, AuthController],
   providers: [AppService, ConcertsService, ReservationsService],
 })
 export class AppModule {}

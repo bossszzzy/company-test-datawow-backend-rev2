@@ -8,7 +8,7 @@ export class ReservationsController {
   constructor(private reservationService: ReservationsService) { }
 
   @UseGuards(RoleGuard)
-  @Get('/history') history() { return this.reservationService.history() }
+  @Get('/history') async history() { return this.reservationService.history() }
 
   @Get('/me')
   my(@Headers() headers: any) {
