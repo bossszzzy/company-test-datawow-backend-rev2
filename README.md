@@ -1,3 +1,9 @@
+For .env
+
+NODE_ENV="development"
+PORT='8888'
+DATABASE_URL="postgresql://neondb_owner:npg_6fmGysY3wiQt@ep-wispy-poetry-a185eji3-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require"
+
 In Postman, Header tabs put 2 roles 
 
 => key = x-role Value = admin
