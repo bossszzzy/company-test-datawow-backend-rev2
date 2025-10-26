@@ -9,7 +9,7 @@ export class RoleGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const req = context.switchToHttp().getRequest()
     const role = req.headers['x-role']
-    if (role !== 'ADMIN') throw new ForbiddenException('Admin Only')
+    if (role !== 'ADMIN' && role !== 'admin') throw new ForbiddenException('Admin Only')
     return true;
   }
 

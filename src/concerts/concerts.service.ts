@@ -27,7 +27,8 @@ export class ConcertsService {
   }
   async remove(id: string) {
     try {
-      return await this.prisma.concert.delete({ where: { id } })
+      await this.prisma.concert.delete({ where: { id } })
+      return { message: "Delete Success" }
     } catch (error) {
       throw new ConcertNotFoundException
     }

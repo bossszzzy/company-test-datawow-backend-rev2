@@ -9,7 +9,6 @@ async function bootstrap() {
 
   app.useGlobalPipes(new GlobalValidationPipe())
   app.useGlobalFilters(new BaseHttpFilter())
-  app.setGlobalPrefix('api')
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap().catch((error) => {
